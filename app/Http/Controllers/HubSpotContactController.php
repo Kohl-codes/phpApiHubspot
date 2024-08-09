@@ -107,7 +107,7 @@ class HubSpotContactController extends Controller
         }
     }
 
-    // Add Delete Method
+    // Delete Method
     public function destroy($id)
     {
         try {
@@ -118,7 +118,7 @@ class HubSpotContactController extends Controller
         }
     }
 
-    // Add Update Method
+    // Update Method
     public function update(Request $request, $id)
     {
         try {
