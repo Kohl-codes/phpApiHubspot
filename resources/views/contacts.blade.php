@@ -11,13 +11,13 @@
             background-color: #f8f9fa;
             margin: 20px;
             background-image: url('{{ asset('img/bg1.jpg') }}');
-            /* Replace with your image URL */
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
         }
+        
         .navbar {
-            background-color: rgba(255, 255, 255, 0.8); /* Transparent background */
+            background-color: rgba(255, 255, 255, 0.8); 
             backdrop-filter: blur(10px);
             border-radius: 8px;
             margin-bottom: 20px;
@@ -37,6 +37,8 @@
             margin-left: 15px;
         }
 
+        
+
         .navbar .form-inline {
             margin-left: auto; /* Ensure the form is aligned to the right */
         }
@@ -54,6 +56,7 @@
 
         h2 {
             color: #343a40;
+            text-align: center;
         }
 
         .form-group label {
@@ -88,6 +91,7 @@
         <!-- Add Contact Form -->
         <form action="{{ route('contacts.store') }}" method="POST">
             @csrf
+            <h2>Add Contact</h2>
             <div class="form-group">
                 <label for="firstname">First Name:</label>
                 <input type="text" class="form-control" id="firstname" name="firstname" required>
