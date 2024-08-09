@@ -27,4 +27,6 @@ Route::post('/contacts', [HubSpotContactController::class, 'store'])->name('cont
 // Route for searching contacts
 Route::get('/search', [HubSpotContactController::class, 'search'])->name('contacts.search');
 
+Route::patch('/contacts/{id}', [HubSpotContactController::class, 'update'])->name('contacts.update');
+Route::delete('/contacts/{id}', [HubSpotContactController::class, 'destroy'])->name('contacts.destroy');
 

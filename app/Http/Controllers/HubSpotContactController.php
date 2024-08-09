@@ -106,4 +106,36 @@ class HubSpotContactController extends Controller
             return redirect()->back()->with('error', 'Failed to retrieve contacts: ' . $e->getMessage());
         }
     }
+
+    // Add Delete Method
+    public function destroy($id)
+    {
+        try {
+            $this->hubspot->crm()->contacts()->basicApi()->archive($id);
+            return redirect()->back()->with('success', 'Contact deleted successfully!');
+        } catch (ApiException $e) {
+            return redirect()->back()->with('error', 'Failed to delete contact: ' . $e->getMessage());
+        }
+    }
+
+    // Add Update Method
+    public function update(Request $request, $id)
+    {
+        try {
+            $contactInput = [
+                'properties' => [
+                    'firstname' => $request->input('firstname'),
+                    'lastname' => $request->input('lastname'),
+                    'email' => $request->input('email'),
+                    'phone' => $request->input('phone'),
+                ],
+            ];
+
+            $this->hubspot->crm()->contacts()->basicApi()->update($id, $contactInput);
+            return redirect()->back()->with('success', 'Contact updated successfully!');
+        } catch (ApiException $e) {
+            return redirect()->back()->with('error', 'Failed to update contact: ' . $e->getMessage());
+        }
+    }
 }
+
