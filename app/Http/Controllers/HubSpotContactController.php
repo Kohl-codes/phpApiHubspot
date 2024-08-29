@@ -58,7 +58,7 @@ class HubSpotContactController extends Controller
         } catch (ApiException $e) {
             return redirect()->back()->with('error', 'Failed to add contact: ' . $e->getMessage());
         }
-    }
+    } 
 
     public function search(Request $request)
     {
