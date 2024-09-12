@@ -9,7 +9,10 @@ Route::get('/', function () {
 });
 
 
+// Contacts page route
+// Route::get('/contacts', [HomeController::class, 'contacts'])->name('contacts.index');
 
+// Home page route
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 
