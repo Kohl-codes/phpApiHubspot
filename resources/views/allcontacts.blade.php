@@ -95,6 +95,21 @@
             border-color: #138496;
             color: white;
         }
+
+        /* Toast Styles for Top Center */
+        .toast {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+            width: 300px;
+        }
+
+        .toast-header {
+            background-color: #17a2b8;
+            color: white;
+        }
     </style>
 </head>
 
@@ -125,10 +140,16 @@
                         </div>
                         <div>
                             <!-- Update Button -->
-                            <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#updateModal" data-id="{{ $contact['id'] }}" data-firstname="{{ $contact['properties']['firstname'] ?? '' }}" data-lastname="{{ $contact['properties']['lastname'] ?? '' }}" data-email="{{ $contact['properties']['email'] ?? '' }}" data-phone="{{ $contact['properties']['phone'] ?? '' }}">Update</button>
+                            <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
+                                data-target="#updateModal" data-id="{{ $contact['id'] }}"
+                                data-firstname="{{ $contact['properties']['firstname'] ?? '' }}"
+                                data-lastname="{{ $contact['properties']['lastname'] ?? '' }}"
+                                data-email="{{ $contact['properties']['email'] ?? '' }}"
+                                data-phone="{{ $contact['properties']['phone'] ?? '' }}">Update</button>
 
                             <!-- Delete Form -->
-                            <form action="{{ route('contacts.destroy', $contact['id']) }}" method="POST" style="display: inline;">
+                            <form action="{{ route('contacts.destroy', $contact['id']) }}" method="POST"
+                                style="display: inline;">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger btn-sm">Delete</button>
@@ -150,11 +171,12 @@
     </div>
 
     <!-- Update Modal -->
-    <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true">
+    <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="updateModalLabel">Update Contact</h5>
+                    <h5 class="modal-title" id="updateModalLabel">Update Contact: </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -190,11 +212,43 @@
         </div>
     </div>
 
+    <!-- Toasts for Success and Error Messages -->
+    <div aria-live="polite" aria-atomic="true" style="position: relative;">
+        @if (session('success'))
+            <!-- Success Toast -->
+            <div class="toast" id="successToast" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header">
+                    <strong class="mr-auto">Success</strong>
+                    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="toast-body">
+                    {{ session('success') }}
+                </div>
+            </div>
+        @elseif(session('error'))
+            <!-- Error Toast -->
+            <div class="toast" id="errorToast" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header" style="background-color: #dc3545; color: white;">
+                    <strong class="mr-auto">Error</strong>
+                    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="toast-body">
+                    {{ session('error') }}
+                </div>
+            </div>
+        @endif
+    </div>
+
+
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
-        $('#updateModal').on('show.bs.modal', function (event) {
+        $('#updateModal').on('show.bs.modal', function(event) {
             var button = $(event.relatedTarget); // Button that triggered the modal
             var id = button.data('id'); // Extract info from data-* attributes
             var firstname = button.data('firstname');
@@ -210,6 +264,20 @@
             modal.find('#phone').val(phone);
             modal.find('#contact_id').val(id);
             modal.find('form').attr('action', '/contacts/' + id);
+        });
+
+        // Function to show toast notification based on result
+        $(document).ready(function() {
+            // Show the appropriate toast based on session message
+            @if (session('success'))
+                $('#successToast').toast({
+                    delay: 5000
+                }).toast('show');
+            @elseif (session('error'))
+                $('#errorToast').toast({
+                    delay: 5000
+                }).toast('show');
+            @endif
         });
     </script>
 </body>

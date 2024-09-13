@@ -7,7 +7,7 @@
     <title>Manage Contacts</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
-         body {
+        body {
             background-color: #f8f9fa;
             margin: 20px;
             background-image: url('{{ asset('img/bg1.jpg') }}');
@@ -15,9 +15,9 @@
             background-position: center;
             background-repeat: no-repeat;
         }
-        
+
         .navbar {
-            background-color: rgba(255, 255, 255, 0.8); 
+            background-color: rgba(255, 255, 255, 0.8);
             backdrop-filter: blur(10px);
             border-radius: 8px;
             margin-bottom: 20px;
@@ -37,10 +37,11 @@
             margin-left: 15px;
         }
 
-        
+
 
         .navbar .form-inline {
-            margin-left: auto; /* Ensure the form is aligned to the right */
+            margin-left: auto;
+            /* Ensure the form is aligned to the right */
         }
 
         .container {
@@ -120,6 +121,17 @@
                     {{ session('error') }}
                 </div>
             @endif
+            
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
             <!-- Center the Add Contact button -->
             <div class="btn-center">
                 <button type="submit" class="btn btn-info">Submit</button>

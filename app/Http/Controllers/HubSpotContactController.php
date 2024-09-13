@@ -43,6 +43,15 @@ class HubSpotContactController extends Controller
 
     public function store(Request $request)
     {
+        // Validate the request
+        $validatedData = $request->validate([
+            'firstname' => 'required|string|min:2|max:200',  // First name must be between 2 and 200 characters
+            'lastname'  => 'required|string|min:2|max:200',  // Last name must be between 2 and 200 characters
+            'email'     => 'required|email|min:5|max:150',   // Email must be between 5 and 150 characters
+            'phone'     => 'required|string|min:7|max:20',   // Phone number must be between 7 and 20 characters
+        ]);
+
+
         try {
             $contactInput = [
                 'properties' => [
@@ -121,6 +130,15 @@ class HubSpotContactController extends Controller
     // Update Method
     public function update(Request $request, $id)
     {
+
+        // Validate the request
+        $validatedData = $request->validate([
+            'firstname' => 'required|string|min:2|max:200',  // First name must be between 2 and 200 characters
+            'lastname'  => 'required|string|min:2|max:200',  // Last name must be between 2 and 200 characters
+            'email'     => 'required|email|min:5|max:150',   // Email must be between 5 and 150 characters
+            'phone'     => 'required|string|min:7|max:20',   // Phone number must be between 7 and 20 characters
+        ]);
+
         try {
             $contactInput = [
                 'properties' => [
